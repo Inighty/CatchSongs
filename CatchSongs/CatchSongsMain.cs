@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CatchSongs.Business;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +28,13 @@ namespace CatchSongs
             //Thread threadGetAllSongId = new Thread(getsonglist.GetAllSongId);
             //threadGetAllSongId.Start();
 
+            CatchSongInfo update = new CatchSongInfo();
+            Thread threadUpdate = new Thread(update.QueryBySongIdAndUpdate);
+            threadUpdate.Start();
+
             for (int threadIndex = 0; threadIndex < threadNumber; threadIndex++)
             {
-                CatchSongs.Business.CatchSongInfo catchsonginfo = new Business.CatchSongInfo();
+                CatchSongInfo catchsonginfo = new CatchSongInfo();
                 catchsonginfo.StartId = threadIndex + startId;
                 catchsonginfo.EndId = endId - threadNumber + threadIndex;
                 catchsonginfo.ThreadNumber = threadNumber;

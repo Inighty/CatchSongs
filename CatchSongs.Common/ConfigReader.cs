@@ -39,6 +39,13 @@ namespace CatchSongs.Common
         {
             get { return GetConfigValue("MinCommentCount", 0); }
         }
+        /// <summary>
+        /// 更新评论数大于该值的歌曲
+        /// </summary>
+        public static int UpdateSongsMinCount
+        {
+            get { return GetConfigValue("UpdateSongsMinCount", 0); }
+        }
 
         public static string MysqlAddress
         {

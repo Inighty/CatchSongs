@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatchSongs.model
+namespace CatchSongs.Model
 {
     public class ParamModel
     {

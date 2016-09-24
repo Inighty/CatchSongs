@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CatchSongInfo.cs" />
-    <Compile Include="NetCatchSongs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Send.cs" />
   </ItemGroup>
@@ -73,6 +72,10 @@
     <ProjectReference Include="..\CatchSongs.DAL\CatchSongs.DAL.csproj">
       <Project>{f5953d49-eba8-43d2-9e6a-68c42bca9d86}</Project>
       <Name>CatchSongs.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CatchSongs.model\CatchSongs.Model.csproj">
+      <Project>{63e86243-1449-4669-9570-ef559ed963e5}</Project>
+      <Name>CatchSongs.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

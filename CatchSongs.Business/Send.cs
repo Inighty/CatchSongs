@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 
-namespace CatchSongs.DAL
+namespace CatchSongs.Business
 {
     public class Send
     {
@@ -16,32 +16,32 @@ namespace CatchSongs.DAL
         Common.TxtLog txtlog = new Common.TxtLog();
         public string postdata(string url, string songId)
         {
-                //编码
-                byte[] postData = Encoding.UTF8.GetBytes(postString); 
-                //地址
-                WebClient webClient = new WebClient();
-                //webClient.Credentials = CredentialCache.DefaultCredentials;
-                webClient.Headers.Add("Referer", "http://music.163.com/song?id=" + songId);
-                webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                webClient.Headers.Add("MediaType", "APPLICATION_FORM_URLENCODED_TYPE");
-                //得到返回字符流  
+            //编码
+            byte[] postData = Encoding.UTF8.GetBytes(postString);
+            //地址
+            WebClient webClient = new WebClient();
+            //webClient.Credentials = CredentialCache.DefaultCredentials;
+            webClient.Headers.Add("Referer", "http://music.163.com/song?id=" + songId);
+            webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            webClient.Headers.Add("MediaType", "APPLICATION_FORM_URLENCODED_TYPE");
+            //得到返回字符流  
 
-                byte[] responseData = webClient.UploadData(url, "POST", postData);
-                webClient.Dispose();
-                //解码 
-                string srcString = Encoding.UTF8.GetString(responseData);
-                Thread.Sleep(1000);
-                return srcString;
+            byte[] responseData = webClient.UploadData(url, "POST", postData);
+            webClient.Dispose();
+            //解码 
+            string srcString = Encoding.UTF8.GetString(responseData);
+            Thread.Sleep(1000);
+            return srcString;
         }
 
         public string getdata(string url)
         {
 
-                WebClient webClient = new WebClient();
-                byte[] responseData = webClient.DownloadData(url);
-                string srcString = Encoding.UTF8.GetString(responseData);
-                Thread.Sleep(1000);
-                return srcString;
+            WebClient webClient = new WebClient();
+            byte[] responseData = webClient.DownloadData(url);
+            string srcString = Encoding.UTF8.GetString(responseData);
+            Thread.Sleep(1000);
+            return srcString;
 
         }
     }

@@ -22,7 +22,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using CatchSongs.Common;
 
-namespace CatchSongs.DAL
+namespace CatchSongs.Business
 {
     /// <summary>
     /// 数据库通用类
@@ -40,6 +40,49 @@ namespace CatchSongs.DAL
         public SQLHelper()
         {
 
+        }
+
+        /// <summary>
+        /// 获取评论数大于（默认10000）的所有songID
+        /// </summary>
+        /// <param name="minCount">最小评论数</param>
+        /// <returns>歌曲列表</returns>
+        public List<int> GetAllSongIdList(int minCount = 0)
+        {
+            TxtLog txtlog = new TxtLog();
+            List<int> list = new List<int>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(mysqlAddress))
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT songId FROM music_v2 where count > " + minCount, conn))
+                    {
+                        if (conn.State == ConnectionState.Closed)
+                        {
+                            conn.Open();
+                        }
+
+                        MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                        DataSet ds = new DataSet();
+                        adp.Fill(ds);
+                        DataTable dt = ds.Tables[0];
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            int colCount = row.ItemArray.Count();
+                            int items = 0;
+                            items = Convert.ToInt32(row.ItemArray[0]);
+                            list.Add(items);
+                        }
+                        //txtlog.log(DateTime.Now.ToString() + " 获取到" + list.Count().ToString() + "条数据", 2);
+                        return list;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                txtlog.log(e.ToString(), 0);
+                return list;
+            }
         }
 
         /// <summary>
@@ -88,9 +131,6 @@ namespace CatchSongs.DAL
         /// <param name="count">count</param>
         public void SolveSongs(int songId, string songName, string artist, int count)
         {
-            StringBuilder updateCmd = new StringBuilder();
-            //判断songId是否已经存在
-            DAL.GetSongList getsonglist = new DAL.GetSongList();
             //List<int> list = getsonglist.getAllSongs();
             //有则更新，无则添加
             //if (list.Contains(songId))
@@ -99,11 +139,16 @@ namespace CatchSongs.DAL
             //}
             //else
             //{
+
+            ////放在外面 是为了最后catch时打印
+            StringBuilder updateCmd = new StringBuilder();
+
             MySqlConnection conn = null;
             try
             {
                 using (conn = new MySqlConnection(mysqlAddress))
                 {
+
                     //歌名可能会有',导致插入失败，转为双引号
                     updateCmd.AppendFormat("insert into music_v2 (songId, songName, artist, count) values ({0},'{1}','{2}',{3}) on duplicate key update count = {4}", songId, songName.Replace("'", "''"), artist, count, count);
                     string updateCmdstr = updateCmd.ToString();
@@ -136,7 +181,7 @@ namespace CatchSongs.DAL
                 }
             }
         }
-      
+
 
         /// <summary>
         /// 更新评论数
@@ -183,6 +228,5 @@ namespace CatchSongs.DAL
             ////填充dataset
             //adp.Fill(ds);
         }
-
     }
 }

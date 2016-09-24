@@ -7,7 +7,7 @@
     <ProjectGuid>{F5953D49-EBA8-43D2-9E6A-68C42BCA9D86}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CatchSongs.DAL</RootNamespace>
+    <RootNamespace>CatchSongs.Business</RootNamespace>
     <AssemblyName>CatchSongs.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -68,7 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetSongs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLHelper.cs" />
   </ItemGroup>
